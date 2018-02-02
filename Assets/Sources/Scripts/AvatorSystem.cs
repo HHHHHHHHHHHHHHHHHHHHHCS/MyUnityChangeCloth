@@ -48,6 +48,9 @@ public class AvatorSystem : MonoBehaviour
         InitAvator();
     }
 
+    /// <summary>
+    /// 初始化正确女孩资源
+    /// </summary>
     private void InitSource()
     {
         GameObject grilSource = Instantiate(Resources.Load<GameObject>("Prefabs/FemaleModel"));
@@ -55,12 +58,20 @@ public class AvatorSystem : MonoBehaviour
         grilSource.SetActive(false);
     }
 
+
+    /// <summary>
+    /// 初始化要被换装的小女孩
+    /// </summary>
     private void InitTarget()
     {
         girlTarget = Instantiate(Resources.Load<GameObject>("Prefabs/FemaleModelTarget"));
         girlHips = girlTarget.GetComponentsInChildren<Transform>();
     }
 
+
+    /// <summary>
+    /// 保存 换装的东西的信息
+    /// </summary>
     private void SaveData()
     {
         if (!girlSourceTrans)
@@ -74,7 +85,7 @@ public class AvatorSystem : MonoBehaviour
         {
             string[] names = part.name.Split('-');
 
-            //如果物体没有生成过
+            //如果部位的物体没有生成过
             if (!girlData.ContainsKey(names[0]))
             {
                 //生成对应的部位，且只生成一个
@@ -90,7 +101,11 @@ public class AvatorSystem : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// 换装
+    /// </summary>
+    /// <param name="part">部位类型</param>
+    /// <param name="num">换装的编号</param>
     private void ChangMesh(string part, string num)
     {
         //找到部位
@@ -124,7 +139,7 @@ public class AvatorSystem : MonoBehaviour
     {
         int length = girlStr.GetLength(0);//获取行数
 
-        for(int i =0;i<length;i++)
+        for (int i = 0; i < length; i++)
         {
             ChangMesh(girlStr[i, 0], girlStr[i, 1]);
         }
