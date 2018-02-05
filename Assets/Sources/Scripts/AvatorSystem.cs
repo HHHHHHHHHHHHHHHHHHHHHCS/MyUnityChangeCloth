@@ -8,7 +8,7 @@ public abstract class AvatorSystem : MonoBehaviour
     /// 初始化人物信息加载
     /// </summary>
     protected string[,] peopleStartStr = new string[,]
-    { { "eyes","1"},{ "hair","1"},{ "top","1"},{ "pants","1"},{ "shoes","1"},{ "face","1"} };
+    { { "eyes","1"},{ "hair","1"},{ "face","1"},{ "top","1"},{ "pants","1"},{ "shoes","1"} };
 
     /// <summary>
     /// 人物所有的装备部件信息

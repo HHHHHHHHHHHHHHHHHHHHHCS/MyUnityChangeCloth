@@ -9,7 +9,7 @@ public class GirlAvator : AvatorSystem
     protected override void Awake()
     {
         var source = InitSource("Prefabs/FemaleModel");
-        target = InitTarget("Prefabs/FemaleModelTarget", 1);
+        target = InitTarget("Prefabs/FemaleModelTarget");
         InitData(source, target);
 
         InitAvator();
