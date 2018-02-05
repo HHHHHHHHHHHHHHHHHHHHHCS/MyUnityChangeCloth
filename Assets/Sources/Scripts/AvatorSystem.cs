@@ -2,102 +2,123 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AvatorSystem : MonoBehaviour
+public abstract class AvatorSystem : MonoBehaviour
 {
     /// <summary>
-    /// 资源Model
+    /// 初始化人物信息加载
     /// </summary>
-    private GameObject girlSource;
+    protected string[,] peopleStartStr = new string[,]
+    { { "eyes","1"},{ "hair","1"},{ "top","1"},{ "pants","1"},{ "shoes","1"},{ "face","1"} };
 
     /// <summary>
-    /// 女孩的资源骨骼
+    /// 人物所有的装备部件信息
     /// </summary>
-    private Transform girlSourceTrans;
+    protected Dictionary<string, Dictionary<string, SkinnedMeshRenderer>> peopleData;
 
     /// <summary>
-    /// 骨架物体，换装的人
+    /// 人物的骨骼信息
     /// </summary>
-    private GameObject girlTarget;
+    protected Transform[] peopleHips;
 
-
-    /// <summary>
-    /// 小女孩所有的资源信息
-    /// </summary>
-    private Dictionary<string, Dictionary<string, SkinnedMeshRenderer>> girlData = new Dictionary<string, Dictionary<string, SkinnedMeshRenderer>>();
-
-    /// <summary>
-    /// 小女孩的骨骼信息
-    /// </summary>
-    private Transform[] girlHips;
     /// <summary>
     /// 换装骨骼身上的SkinnedMeshRenderer信息
     /// </summary>
-    private Dictionary<string, SkinnedMeshRenderer> gilrSmr = new Dictionary<string, SkinnedMeshRenderer>();
+    protected Dictionary<string, SkinnedMeshRenderer> peopleSmr;
 
-    /// <summary>
-    /// 初始女孩加载
-    /// </summary>
-    private readonly string[,] girlStr = new string[,]
-    { { "eyes","1"},{ "hair","1"},{ "top","1"},{ "pants","1"},{ "shoes","1"},{ "face","1"} };
 
-    private void Awake()
+
+    protected virtual void Awake()
     {
-        InitSource();
-        InitTarget();
-        SaveData();
+        var source = InitSource(null);
+        var target = InitTarget(null);
+        InitData(source, target);
+
         InitAvator();
     }
 
-    /// <summary>
-    /// 初始化正确女孩资源
-    /// </summary>
-    private void InitSource()
+    protected virtual void Update()
     {
-        GameObject grilSource = Instantiate(Resources.Load<GameObject>("Prefabs/FemaleModel"));
-        girlSourceTrans = grilSource.transform;
-        grilSource.SetActive(false);
+        if (Input.GetMouseButtonDown(0))
+        {
+            ChangeMesh("top", (Random.Range(1, 7)).ToString());
+        }
+    }
+
+    /// <summary>
+    /// 初始化正确人物资源
+    /// </summary>
+    protected virtual Transform InitSource(string peopleModelStr)
+    {
+        if(string.IsNullOrEmpty(peopleModelStr))
+        {
+            return null;
+        }
+        var peopleSource = Instantiate(Resources.Load<GameObject>(peopleModelStr));
+        peopleSource.SetActive(false);
+        return peopleSource.transform; 
     }
 
 
     /// <summary>
-    /// 初始化要被换装的小女孩
+    /// 初始化要被换装的人物
     /// </summary>
-    private void InitTarget()
+    protected virtual Transform InitTarget(string peopleModelTargetStr, float x = 0, float y = 0, float z = 0)
     {
-        girlTarget = Instantiate(Resources.Load<GameObject>("Prefabs/FemaleModelTarget"));
-        girlHips = girlTarget.GetComponentsInChildren<Transform>();
+        if (string.IsNullOrEmpty(peopleModelTargetStr))
+        {
+            return null;
+        }
+        var peopleTarget = Instantiate(Resources.Load<GameObject>(peopleModelTargetStr)
+            , new Vector3(x, y, z), Quaternion.identity);
+        peopleHips = peopleTarget.GetComponentsInChildren<Transform>();
+        return peopleTarget.transform;
+    }
+
+    /// <summary>
+    /// 初始化人物默认的装备部件
+    /// </summary>
+    protected virtual void InitAvator()
+    {
+        int length = peopleStartStr.GetLength(0);//获取行数
+
+        for (int i = 0; i < length; i++)
+        {
+            ChangeMesh(peopleStartStr[i, 0], peopleStartStr[i, 1]);
+        }
     }
 
 
     /// <summary>
     /// 保存 换装的东西的信息
     /// </summary>
-    private void SaveData()
+    protected virtual void InitData(Transform source,Transform target)
     {
-        if (!girlSourceTrans)
+        if (!(source||target))
         {
             return;
         }
-
+        //初始化字典
+        peopleData = new Dictionary<string, Dictionary<string, SkinnedMeshRenderer>>();
+        peopleSmr = new Dictionary<string, SkinnedMeshRenderer>();
         //遍历所有子物体有SkinnedMeshRenderer,进行存储
-        SkinnedMeshRenderer[] parts = girlSourceTrans.GetComponentsInChildren<SkinnedMeshRenderer>();
+        SkinnedMeshRenderer[] parts = source.GetComponentsInChildren<SkinnedMeshRenderer>(true);
         foreach (var part in parts)
         {
             string[] names = part.name.Split('-');
 
             //如果部位的物体没有生成过
-            if (!girlData.ContainsKey(names[0]))
+            if (!peopleData.ContainsKey(names[0]))
             {
                 //生成对应的部位，且只生成一个
                 GameObject partGo = new GameObject(names[0]);
-                partGo.transform.parent = girlTarget.transform;
+                partGo.transform.parent = target;
 
                 //把骨骼target身上的skm信息存储
-                gilrSmr.Add(names[0], partGo.AddComponent<SkinnedMeshRenderer>());
+                peopleSmr.Add(names[0], partGo.AddComponent<SkinnedMeshRenderer>());
 
-                girlData.Add(names[0], new Dictionary<string, SkinnedMeshRenderer>());
+                peopleData.Add(names[0], new Dictionary<string, SkinnedMeshRenderer>());
             }
-            girlData[names[0]].Add(names[1], part);
+            peopleData[names[0]].Add(names[1], part);
         }
     }
 
@@ -106,16 +127,16 @@ public class AvatorSystem : MonoBehaviour
     /// </summary>
     /// <param name="part">部位类型</param>
     /// <param name="num">换装的编号</param>
-    private void ChangMesh(string part, string num)
+    protected virtual void ChangeMesh(string part, string num)
     {
         //找到部位
-        SkinnedMeshRenderer skm = girlData[part][num];
+        SkinnedMeshRenderer skm = peopleData[part][num];
 
         //骨骼匹配   即 皮上的信息 跟 骨骼的信息想互相匹配
         List<Transform> bones = new List<Transform>();
         foreach (var trans in skm.bones)
         {
-            foreach (var bone in girlHips)
+            foreach (var bone in peopleHips)
             {
                 if (trans.name == bone.name)
                 {
@@ -126,22 +147,11 @@ public class AvatorSystem : MonoBehaviour
         }
 
         //换装实现
-        var body = gilrSmr[part];
+        var body = peopleSmr[part];
         body.bones = bones.ToArray();//骨骼重新绑定
         body.materials = skm.materials;//材质重新绑定
         body.sharedMesh = skm.sharedMesh;//蒙皮重新绑定
     }
 
-    /// <summary>
-    /// 初始化骨骼框架 让他有mesh 材质 骨骼信息
-    /// </summary>
-    private void InitAvator()
-    {
-        int length = girlStr.GetLength(0);//获取行数
 
-        for (int i = 0; i < length; i++)
-        {
-            ChangMesh(girlStr[i, 0], girlStr[i, 1]);
-        }
-    }
 }
