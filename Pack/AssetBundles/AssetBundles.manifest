@@ -1,0 +1,10 @@
+ManifestFileVersion: 0
+CRC: 2477390286
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: character/male.ab
+      Dependencies: {}
+    Info_1:
+      Name: character/female.ab
+      Dependencies: {}

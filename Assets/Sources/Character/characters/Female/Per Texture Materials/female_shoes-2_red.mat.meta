@@ -1,6 +1,8 @@
 fileFormatVersion: 2
 guid: 841117a78974c78429375a697b9acbed
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: character/female
+  assetBundleVariant: ab

@@ -3,6 +3,8 @@ guid: 8e4ffc40729a60a489b0e6906c820ac6
 timeCreated: 1468893531
 licenseType: Free
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: character/male
+  assetBundleVariant: ab
