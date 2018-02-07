@@ -3426,8 +3426,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1871203850}
-  - component: {fileID: 1871203849}
   - component: {fileID: 1871203851}
+  - component: {fileID: 1871203849}
   - component: {fileID: 1871203852}
   m_Layer: 0
   m_Name: GameManager
@@ -3482,6 +3482,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf2ce463d9e017d468f1a26e3700cf63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boy: {fileID: 1871203851}
+  girl: {fileID: 1871203849}
 --- !u!1 &1885660581
 GameObject:
   m_ObjectHideFlags: 0
@@ -3819,7 +3821,7 @@ Prefab:
     - target: {fileID: 224423948955399602, guid: fa53757b12ed9fe43ba909899945c44c,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 254.5
+      value: 317.5
       objectReference: {fileID: 0}
     - target: {fileID: 224423948955399602, guid: fa53757b12ed9fe43ba909899945c44c,
         type: 2}

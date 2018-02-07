@@ -4,7 +4,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class LocalHandler : MonoBehaviour
+public class LocalHandler
 {
     /// <summary>
     /// 记录版本号的几种状态
@@ -16,7 +16,11 @@ public class LocalHandler : MonoBehaviour
         WebDown//服务器炸了，本地没有网，离线模式
     }
 
-    public IEnumerator CheckAssetBundle()
+    /// <summary>
+    /// 检查包的状态
+    /// </summary>
+    /// <returns></returns>
+    public static IEnumerator CheckAssetBundle()
     {
         yield return ServerHandler.GetServerVersion();
         var serverJson = ServerHandler.GetCacheMessage<string>();
@@ -31,7 +35,7 @@ public class LocalHandler : MonoBehaviour
             case VersionEnum.Different:
                 //不同版本号下载
                 Debug.Log("Different");
-                StartCoroutine(DownloadByDifferent());
+                yield return DownloadByDifferent();
                 break;
             case VersionEnum.WebDown:
                 //服务器炸了，本地没有网，离线模式
@@ -46,13 +50,13 @@ public class LocalHandler : MonoBehaviour
     /// 下载不同的东西，前提是玩家没有自己删东西
     /// </summary>
     /// <returns></returns>
-    private IEnumerator DownloadByDifferent()
+    private static IEnumerator DownloadByDifferent()
     {
         //从服务器读取包
-        var filePath= string.Format("{0}/{1}", URL.server_dir, URL.assetBundles_file);
+        var filePath = string.Format("{0}/{1}", URL.server_dir, URL.assetBundles_file);
         yield return ServerHandler.DownLoadAssetBundle(filePath);
         var bs = ServerHandler.GetCacheMessage<byte[]>();
-        if(bs!=null)
+        if (bs != null)
         {
             var serverbundles = AssetBundle.LoadFromMemory(bs);
 
@@ -109,10 +113,15 @@ public class LocalHandler : MonoBehaviour
         Resources.UnloadUnusedAssets();//释放无效资源
     }
 
-    private void MakeDictionaryByBundles(AssetBundle bundles, out Dictionary<string, string> dic)
+    /// <summary>
+    /// 创建字典根据包
+    /// </summary>
+    /// <param name="bundles"></param>
+    /// <param name="dic"></param>
+    private static void MakeDictionaryByBundles(AssetBundle bundles, out Dictionary<string, string> dic)
     {
         dic = new Dictionary<string, string>();
-        if (bundles!=null)
+        if (bundles != null)
         {
             var manifest = bundles.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
             var allBundles = manifest.GetAllAssetBundles();
@@ -124,10 +133,14 @@ public class LocalHandler : MonoBehaviour
         }
     }
 
-
-    public VersionEnum CheckVersionMD5(string serverJson)
+    /// <summary>
+    /// 检查包的MD5
+    /// </summary>
+    /// <param name="serverJson"></param>
+    /// <returns></returns>
+    public static VersionEnum CheckVersionMD5(string serverJson)
     {
-        string localVersionMD5,serverVersionMD5;
+        string localVersionMD5, serverVersionMD5;
         localVersionMD5 = JsonHandler_Local.ReadVersionMD5();
         serverVersionMD5 = JsonHandler_Server.ReadVersionMD5(serverJson);
         Debug.Log(localVersionMD5);
@@ -146,8 +159,12 @@ public class LocalHandler : MonoBehaviour
         return VersionEnum.WebDown;
     }
 
-
-    public static void SaveBundleToLocal(string filePath,byte[] data)
+    /// <summary>
+    /// 保存包在本地
+    /// </summary>
+    /// <param name="filePath"></param>
+    /// <param name="data"></param>
+    public static void SaveBundleToLocal(string filePath, byte[] data)
     {
         var dir = Path.GetDirectoryName(filePath);
         if (!Directory.Exists(dir))
@@ -155,24 +172,59 @@ public class LocalHandler : MonoBehaviour
             Directory.CreateDirectory(dir);
         }
 
-        using (FileStream fs = new FileStream(filePath,FileMode.OpenOrCreate))
+        using (FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate))
         {
-            fs.Write(data,0,data.Length);
+            fs.Write(data, 0, data.Length);
             fs.Flush();
             fs.Close();
             fs.Dispose();
         }
     }
 
+    /// <summary>
+    /// 根据服务器包的MD5保存在本地
+    /// </summary>
+    /// <param name="dic"></param>
     private static void SetVersionMD5ByDic(Dictionary<string, string> dic)
     {
         int i = 0;
         string[] strArray = new string[dic.Count];
-        foreach(var item in dic.Values)
+        foreach (var item in dic.Values)
         {
             strArray[i++] = item;
         }
 
         JsonHandler_Local.CreateJson(strArray);
+    }
+
+    /// <summary>
+    /// 加载全部的包
+    /// </summary>
+    public static Dictionary<string, AssetBundle> LoadAllAssetBundles()
+    {
+        string allBundlesStr = string.Format("{0}/{1}", URL.local_dir, URL.assetBundles_file);
+        Dictionary<string, AssetBundle> dic = new Dictionary<string, AssetBundle>();
+        if (File.Exists(allBundlesStr))
+        {
+            AssetBundle allBundles = AssetBundle.LoadFromFile(allBundlesStr);
+            AssetBundleManifest abm = allBundles.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
+            string bundleStr;
+            foreach (var filePath in abm.GetAllAssetBundles())
+            {
+                bundleStr = string.Format("{0}/{1}", URL.local_dir, filePath);
+                if (File.Exists(bundleStr))
+                {
+                    if (filePath.IndexOf(URL.female_file) > 0)
+                    {
+                        dic.Add(URL.female_dic, AssetBundle.LoadFromFile(bundleStr));
+                    }
+                    else if (filePath.IndexOf(URL.male_file) > 0)
+                    {
+                        dic.Add(URL.male_dic, AssetBundle.LoadFromFile(bundleStr));
+                    }
+                }
+            }
+        }
+        return dic;
     }
 }

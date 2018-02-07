@@ -6,12 +6,16 @@ public class GirlAvator : AvatorSystem
 {
     private Transform target;
 
-    protected override void Awake()
+    public void Init(AssetBundle ab)
     {
-        var source = InitSource("Prefabs/FemaleModel");
-        target = InitTarget("Prefabs/FemaleModelTarget");
-        InitData(source, target);
+        if(ab)
+        {
+            assetBundle = ab;
+            var source = InitSource("Assets/Prefabs/FemaleModel.prefab");
+            target = InitTarget("Assets/Prefabs/FemaleModelTarget.prefab");
+            InitData(source, target);
 
-        InitAvator();
+            InitAvator();
+        }
     }
 }

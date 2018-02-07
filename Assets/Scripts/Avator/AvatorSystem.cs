@@ -25,9 +25,9 @@ public abstract class AvatorSystem : MonoBehaviour
     /// </summary>
     protected Dictionary<string, SkinnedMeshRenderer> peopleSmr;
 
+    protected AssetBundle assetBundle;
 
-
-    protected virtual void Awake()
+    protected virtual void Init()
     {
         var source = InitSource(null);
         var target = InitTarget(null);
@@ -53,7 +53,7 @@ public abstract class AvatorSystem : MonoBehaviour
         {
             return null;
         }
-        var peopleSource = Instantiate(Resources.Load<GameObject>(peopleModelStr));
+        var peopleSource = Instantiate(assetBundle.LoadAsset<GameObject>(peopleModelStr));
         peopleSource.SetActive(false);
         return peopleSource.transform; 
     }
@@ -68,7 +68,7 @@ public abstract class AvatorSystem : MonoBehaviour
         {
             return null;
         }
-        var peopleTarget = Instantiate(Resources.Load<GameObject>(peopleModelTargetStr)
+        var peopleTarget = Instantiate(assetBundle.LoadAsset<GameObject>(peopleModelTargetStr)
             , new Vector3(x, y, z), Quaternion.identity);
         peopleHips = peopleTarget.GetComponentsInChildren<Transform>();
         return peopleTarget.transform;
