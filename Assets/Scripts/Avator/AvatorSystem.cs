@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Newtonsoft.Json.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -40,8 +41,9 @@ public abstract class AvatorSystem : MonoBehaviour
     protected virtual void Init()
     {
         var source = InitSource(null);
-        var target = InitTarget(null);
-        InitData(source, target);
+        InitTarget(null);
+        InitData(source);
+        InitJson();
 
         InitAvator();
     }
@@ -101,9 +103,9 @@ public abstract class AvatorSystem : MonoBehaviour
     /// <summary>
     /// 保存 换装的东西的信息
     /// </summary>
-    protected virtual void InitData(Transform source, Transform target)
+    protected virtual void InitData(Transform source)
     {
-        if (!(source || target))
+        if (!(source || peopleTarget))
         {
             return;
         }
@@ -121,7 +123,7 @@ public abstract class AvatorSystem : MonoBehaviour
             {
                 //生成对应的部位，且只生成一个
                 GameObject partGo = new GameObject(names[0]);
-                partGo.transform.parent = target;
+                partGo.transform.parent = peopleTarget.transform;
 
                 //把骨骼target身上的skm信息存储
                 peopleSmr.Add(names[0], partGo.AddComponent<SkinnedMeshRenderer>());
@@ -129,6 +131,25 @@ public abstract class AvatorSystem : MonoBehaviour
                 peopleData.Add(names[0], new Dictionary<string, SkinnedMeshRenderer>());
             }
             peopleData[names[0]].Add(names[1], part);
+        }
+    }
+
+    /// <summary>
+    /// 初始化Json信息
+    /// </summary>
+    protected virtual void InitJson()
+    {
+        foreach(var item in assetBundle.GetAllAssetNames())
+        {
+            if(item.IndexOf(AssetBundleNames.json)>0)
+            {
+                TextAsset ta = assetBundle.LoadAsset<TextAsset>(item);
+                JObject jo = JObject.Parse(ta.text);
+                foreach(var i in jo)
+                {
+                    Debug.Log(i);
+                }
+            }
         }
     }
 

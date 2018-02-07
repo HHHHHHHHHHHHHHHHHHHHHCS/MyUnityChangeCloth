@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2031961080
+CRC: 875392109
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: b26526811106052448037cc2743ae6c7
+    Hash: 36680130dd6ce0d0b9c782b6b958ae9d
   TypeTreeHash:
     serializedVersion: 2
-    Hash: ede92770dbed84c4ba3f25644068a6dd
+    Hash: b5188c1a5fa91cad367cc8ed3157b9da
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -20,6 +20,8 @@ ClassTypes:
 - Class: 43
   Script: {instanceID: 0}
 - Class: 48
+  Script: {instanceID: 0}
+- Class: 49
   Script: {instanceID: 0}
 - Class: 74
   Script: {instanceID: 0}
@@ -89,6 +91,7 @@ Assets:
 - Assets/Sources/Character/characters/Male/textures/male_shoes-1_green.tga
 - Assets/Sources/Character/characters/Male/textures/male_shoes-2_normal.tga
 - Assets/Sources/Character/characters/Male/textures/male_shoes-2_dark.tga
+- Assets/Sources/Character/Male.json
 - Assets/Sources/Character/characters/Male/Per Texture Materials/male_hair-2_red.mat
 - Assets/Sources/Character/characters/Male/Per Texture Materials/male_shoes-2_dark.mat
 - Assets/Sources/Character/characters/Male/Per Texture Materials/male_shoes-1_red.mat

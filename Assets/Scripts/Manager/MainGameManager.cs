@@ -25,10 +25,10 @@ public class MainGameManager : MonoBehaviour
         if (assetBundleDic != null && assetBundleDic.Count > 0)
         {//这里如果大于0，默认就当加载成功了，否则就是失败了
             //正常要单独判断包
-            boy.Init(assetBundleDic[URL.male_dic]);
-            girl.Init(assetBundleDic[URL.female_dic]);
+            boy.Init(assetBundleDic[AssetBundleNames.male_dic]);
+            girl.Init(assetBundleDic[AssetBundleNames.female_dic]);
         }
-        ShowHideGirl(true);
+        ShowHideBoy(true);
     }
 
     public void ShowHideBoy(bool isShow)

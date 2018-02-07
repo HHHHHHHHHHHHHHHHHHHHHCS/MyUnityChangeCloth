@@ -23,9 +23,4 @@
     public const string version_file = "AssetBundlesVersion";
     public const string assetBundles_file = "AssetBundles";
 
-    public const string male_file = "/male";
-    public const string female_file = "/female";
-
-    public const string male_dic = "male";
-    public const string female_dic = "female";
 }

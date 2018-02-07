@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GirlAvator : AvatorSystem
 {
-    private Transform target;
 
     public void Init(AssetBundle ab)
     {
@@ -12,8 +11,9 @@ public class GirlAvator : AvatorSystem
         {
             assetBundle = ab;
             var source = InitSource("Assets/Prefabs/FemaleModel.prefab");
-            target = InitTarget("Assets/Prefabs/FemaleModelTarget.prefab");
-            InitData(source, target);
+            InitTarget("Assets/Prefabs/FemaleModelTarget.prefab");
+            InitData(source);
+            InitJson();
 
             InitAvator();
             ShowHideAvator(false);

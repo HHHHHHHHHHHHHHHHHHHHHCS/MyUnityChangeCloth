@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1640878000
+CRC: 404798618
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: eb7d36520931813acda9a13ad62e9ced
+    Hash: 1a6e5b3c2ba648299f33fe5bc0c31283
   TypeTreeHash:
     serializedVersion: 2
-    Hash: ede92770dbed84c4ba3f25644068a6dd
+    Hash: b5188c1a5fa91cad367cc8ed3157b9da
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -20,6 +20,8 @@ ClassTypes:
 - Class: 43
   Script: {instanceID: 0}
 - Class: 48
+  Script: {instanceID: 0}
+- Class: 49
   Script: {instanceID: 0}
 - Class: 74
   Script: {instanceID: 0}
@@ -46,6 +48,7 @@ Assets:
 - Assets/Sources/Character/characters/Female/Per Texture Materials/female_pants-1_dark.mat
 - Assets/Sources/Character/characters/Female/textures/female_eyes_brown.tga
 - Assets/Sources/Character/characters/Female/Per Texture Materials/female_pants-2_blue.mat
+- Assets/Sources/Character/Female.json
 - Assets/Sources/Character/characters/Female/textures/female_hair-1_red.tga
 - Assets/Sources/Character/characters/Female/textures/female_face-2.tga
 - Assets/Sources/Character/characters/Female/textures/female_shoes-2_yellow.tga

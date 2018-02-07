@@ -30,16 +30,16 @@ public class LocalHandler
         {
             case VersionEnum.Same:
                 //相同版本号忽略
-                Debug.Log("Same Version");
+                //Debug.Log("Same Version");
                 break;
             case VersionEnum.Different:
                 //不同版本号下载
-                Debug.Log("Different");
+                //Debug.Log("Different");
                 yield return DownloadByDifferent();
                 break;
             case VersionEnum.WebDown:
                 //服务器炸了，本地没有网，离线模式
-                Debug.Log("Web BOOOM");
+                //Debug.Log("Web BOOOM");
                 break;
             default:
                 break;
@@ -143,8 +143,8 @@ public class LocalHandler
         string localVersionMD5, serverVersionMD5;
         localVersionMD5 = JsonHandler_Local.ReadVersionMD5();
         serverVersionMD5 = JsonHandler_Server.ReadVersionMD5(serverJson);
-        Debug.Log(localVersionMD5);
-        Debug.Log(serverVersionMD5);
+        //Debug.Log(localVersionMD5);
+        //Debug.Log(serverVersionMD5);
         if (!string.IsNullOrEmpty(serverVersionMD5))
         {
             if (!string.IsNullOrEmpty(localVersionMD5))
@@ -214,13 +214,13 @@ public class LocalHandler
                 bundleStr = string.Format("{0}/{1}", URL.local_dir, filePath);
                 if (File.Exists(bundleStr))
                 {
-                    if (filePath.IndexOf(URL.female_file) > 0)
+                    if (filePath.IndexOf(AssetBundleNames.female_file) > 0)
                     {
-                        dic.Add(URL.female_dic, AssetBundle.LoadFromFile(bundleStr));
+                        dic.Add(AssetBundleNames.female_dic, AssetBundle.LoadFromFile(bundleStr));
                     }
-                    else if (filePath.IndexOf(URL.male_file) > 0)
+                    else if (filePath.IndexOf(AssetBundleNames.male_file) > 0)
                     {
-                        dic.Add(URL.male_dic, AssetBundle.LoadFromFile(bundleStr));
+                        dic.Add(AssetBundleNames.male_dic, AssetBundle.LoadFromFile(bundleStr));
                     }
                 }
             }

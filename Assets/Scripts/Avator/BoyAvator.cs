@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class BoyAvator : AvatorSystem
 {
-    private Transform target;
-
     public void Init(AssetBundle ab)
     {
         if(ab)
         {
             assetBundle = ab;
             var source = InitSource("Assets/Prefabs/MaleModel.prefab");
-            target = InitTarget("Assets/Prefabs/MaleModelTarget.prefab");
-            InitData(source, target);
+            InitTarget("Assets/Prefabs/MaleModelTarget.prefab");
+            InitData(source);
+            InitJson();
 
             InitAvator();
             ShowHideAvator(false);
