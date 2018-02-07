@@ -11,7 +11,12 @@ public class AssetBundleHelper
     {
         string dir = URL.pack_Dir;
         if (!Directory.Exists(dir))
-        {
+        {//如果文件夹不存在则创建
+            Directory.CreateDirectory(dir);
+        }
+        else
+        {//否则删了重新打包
+            Directory.Delete(dir, true);
             Directory.CreateDirectory(dir);
         }
         AssetBundleManifest abm = BuildPipeline.BuildAssetBundles(dir, BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.StandaloneWindows64);

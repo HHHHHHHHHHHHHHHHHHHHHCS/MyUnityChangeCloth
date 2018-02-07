@@ -5,10 +5,11 @@
     {
         CreateJson(strArray, URL.server_dir, URL.version_file);
     }
-#endif
+
 
     public static string ReadVersionMD5()
     {
-        return ReadJson(URL.server_dir, URL.version_file);
+        return ReadVersionMD5(URL.server_dir, URL.version_file);
     }
+#endif
 }

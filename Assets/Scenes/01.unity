@@ -2205,7 +2205,7 @@ RectTransform:
   - {fileID: 1842557422}
   - {fileID: 868655194}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3430,7 +3430,7 @@ GameObject:
   - component: {fileID: 1871203851}
   - component: {fileID: 1871203852}
   m_Layer: 0
-  m_Name: System
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3458,7 +3458,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1871203851
 MonoBehaviour:
@@ -3479,7 +3479,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1871203848}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7a50ab416a9cdf4392d9b0361d995a2, type: 3}
+  m_Script: {fileID: 11500000, guid: bf2ce463d9e017d468f1a26e3700cf63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1885660581
@@ -3802,7 +3802,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1999708525
 Prefab:
@@ -3819,7 +3819,7 @@ Prefab:
     - target: {fileID: 224423948955399602, guid: fa53757b12ed9fe43ba909899945c44c,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 317.5
+      value: 254.5
       objectReference: {fileID: 0}
     - target: {fileID: 224423948955399602, guid: fa53757b12ed9fe43ba909899945c44c,
         type: 2}
