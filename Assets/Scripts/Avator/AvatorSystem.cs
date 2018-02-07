@@ -25,7 +25,17 @@ public abstract class AvatorSystem : MonoBehaviour
     /// </summary>
     protected Dictionary<string, SkinnedMeshRenderer> peopleSmr;
 
+    /// <summary>
+    /// 展示出的人物
+    /// </summary>
+    protected GameObject peopleTarget;
+
+    /// <summary>
+    /// 任务的资源包
+    /// </summary>
     protected AssetBundle assetBundle;
+
+
 
     protected virtual void Init()
     {
@@ -49,13 +59,13 @@ public abstract class AvatorSystem : MonoBehaviour
     /// </summary>
     protected virtual Transform InitSource(string peopleModelStr)
     {
-        if(string.IsNullOrEmpty(peopleModelStr))
+        if (string.IsNullOrEmpty(peopleModelStr))
         {
             return null;
         }
         var peopleSource = Instantiate(assetBundle.LoadAsset<GameObject>(peopleModelStr));
         peopleSource.SetActive(false);
-        return peopleSource.transform; 
+        return peopleSource.transform;
     }
 
 
@@ -68,7 +78,7 @@ public abstract class AvatorSystem : MonoBehaviour
         {
             return null;
         }
-        var peopleTarget = Instantiate(assetBundle.LoadAsset<GameObject>(peopleModelTargetStr)
+        peopleTarget = Instantiate(assetBundle.LoadAsset<GameObject>(peopleModelTargetStr)
             , new Vector3(x, y, z), Quaternion.identity);
         peopleHips = peopleTarget.GetComponentsInChildren<Transform>();
         return peopleTarget.transform;
@@ -91,9 +101,9 @@ public abstract class AvatorSystem : MonoBehaviour
     /// <summary>
     /// 保存 换装的东西的信息
     /// </summary>
-    protected virtual void InitData(Transform source,Transform target)
+    protected virtual void InitData(Transform source, Transform target)
     {
-        if (!(source||target))
+        if (!(source || target))
         {
             return;
         }
@@ -153,5 +163,11 @@ public abstract class AvatorSystem : MonoBehaviour
         body.sharedMesh = skm.sharedMesh;//蒙皮重新绑定
     }
 
-
+    public void ShowHideAvator(bool isShow = false)
+    {
+        if(peopleTarget)
+        {
+            peopleTarget.SetActive(isShow);
+        }
+    }
 }

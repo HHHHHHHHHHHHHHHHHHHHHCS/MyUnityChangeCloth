@@ -16,6 +16,7 @@ public class GirlAvator : AvatorSystem
             InitData(source, target);
 
             InitAvator();
+            ShowHideAvator(false);
         }
     }
 }
