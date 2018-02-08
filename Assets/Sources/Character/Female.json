@@ -1,4 +1,7 @@
 {
-    "eyes_sprite": [ "eyes_blue", "eyes_brown", "eyes_green" ],
-    "hairs_sprite": [ "hair_blond", "hair_brown", "hair_orange", "hair_blond1", "hair_brown1", "hair_orange1" ]
+    "eyes": [ "eyes_blue", "eyes_brown", "eyes_green" ],
+    "hair": [ "hair_brown", "hair_red", "hair_yellow", "hair_cyan", "hair_dark", "hair_pink" ],
+    "pants": [ "pants_blue", "pants_dark", "pants_green", "pants_black", "pants_blue1", "pants_orange" ],
+    "shoes": [ "shoes_blue", "shoes_green", "shoes_yellow", "shoes_blue1", "shoes_red", "shoes_yellow1" ],
+    "top": [ "top_blue", "top_green", "top_pink", "top_green2", "top_orange", "top_purple" ]
 }

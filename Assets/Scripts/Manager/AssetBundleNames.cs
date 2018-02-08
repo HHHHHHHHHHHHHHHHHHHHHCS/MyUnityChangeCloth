@@ -7,4 +7,6 @@
     public const string female_dic = "female";
 
     public const string json = "json";
+
+    public const string itemSprite = "Border/Image";
 }

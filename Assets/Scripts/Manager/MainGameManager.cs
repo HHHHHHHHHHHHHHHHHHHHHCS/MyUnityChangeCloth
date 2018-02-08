@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class MainGameManager : MonoBehaviour
 {
-    public static MainGameManager Instance{ get; private set; }
+    public static MainGameManager Instance { get; private set; }
 
 
-    public BoyAvator boy;
-    public GirlAvator girl;
+    public BoyAvatar boy;
+    public GirlAvatar girl;
+
     private Dictionary<string, AssetBundle> assetBundleDic;
+    private AvatarSystem currentAvatar;
 
     private void Awake()
     {
         Instance = this;
         StartCoroutine(Init());
-
     }
 
     private IEnumerator Init()
@@ -33,11 +34,29 @@ public class MainGameManager : MonoBehaviour
 
     public void ShowHideBoy(bool isShow)
     {
-        boy.ShowHideAvator(isShow);
+        boy.ShowHideAvatar(isShow);
+        if (isShow)
+        {
+            currentAvatar = boy;
+        }
     }
 
     public void ShowHideGirl(bool isShow)
     {
-        girl.ShowHideAvator(isShow);
+        girl.ShowHideAvatar(isShow);
+        if (isShow)
+        {
+            currentAvatar = girl;
+        }
+    }
+
+    public List<Sprite> GetSpritesByPart(string part)
+    {
+        return currentAvatar ? currentAvatar.GetSpritesByPart(part) : null;
+    }
+
+    public void ChangeCurrentPart(string part,string index)
+    {
+        currentAvatar.ChangeMesh(part, index);
     }
 }
