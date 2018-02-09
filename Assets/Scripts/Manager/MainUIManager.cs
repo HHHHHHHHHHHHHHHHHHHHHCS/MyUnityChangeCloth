@@ -29,7 +29,11 @@ public class MainUIManager : MonoBehaviour
         girlToggle.onValueChanged.AddListener(ChangeGirlAvotor);
     }
 
-    private void ChangeTab(bool isShow)
+    /// <summary>
+    /// 切换部件列表
+    /// </summary>
+    /// <param name="isShow"></param>
+    public void ChangeTab(bool isShow)
     {
         if (!isShow)
         {
@@ -86,10 +90,12 @@ public class MainUIManager : MonoBehaviour
     private void ChangeBoyAvotor(bool isShow)
     {
         MainGameManager.Instance.ShowHideBoy(isShow);
+        ChangeTab(true);
     }
 
     private void ChangeGirlAvotor(bool isShow)
     {
         MainGameManager.Instance.ShowHideGirl(isShow);
+        ChangeTab(true);
     }
 }

@@ -6,7 +6,7 @@ public class MainGameManager : MonoBehaviour
 {
     public static MainGameManager Instance { get; private set; }
 
-
+    public MainUIManager mainUIManager;
     public BoyAvatar boy;
     public GirlAvatar girl;
 
@@ -30,6 +30,7 @@ public class MainGameManager : MonoBehaviour
             girl.Init(assetBundleDic[AssetBundleNames.female_dic]);
         }
         ShowHideBoy(true);
+        mainUIManager.ChangeTab(true);
     }
 
     public void ShowHideBoy(bool isShow)

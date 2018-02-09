@@ -3419,6 +3419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf2ce463d9e017d468f1a26e3700cf63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainUIManager: {fileID: 1304362410}
   boy: {fileID: 1871203851}
   girl: {fileID: 1871203849}
 --- !u!1 &1885660581
