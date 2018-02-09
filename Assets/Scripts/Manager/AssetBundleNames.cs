@@ -9,4 +9,8 @@
     public const string json = "json";
 
     public const string itemSprite = "Border/Image";
+
+    public const string top = "top";
+    public const string pants = "pants";
+    public const string shoes = "shoes";
 }

@@ -42,7 +42,10 @@ public abstract class AvatarSystem : MonoBehaviour
     /// </summary>
     protected AssetBundle assetBundle;
 
-
+    /// <summary>
+    /// 人物的动画组件
+    /// </summary>
+    protected Animation peopleAnim;
 
     protected virtual void Init()
     {
@@ -89,6 +92,7 @@ public abstract class AvatarSystem : MonoBehaviour
         peopleTarget = Instantiate(assetBundle.LoadAsset<GameObject>(peopleModelTargetStr)
             , new Vector3(x, y, z), Quaternion.identity);
         peopleHips = peopleTarget.GetComponentsInChildren<Transform>();
+        peopleAnim = peopleTarget.GetComponent<Animation>();
         return peopleTarget.transform;
     }
 
@@ -215,7 +219,35 @@ public abstract class AvatarSystem : MonoBehaviour
             body.materials = skm.materials;//材质重新绑定
             body.sharedMesh = skm.sharedMesh;//蒙皮重新绑定
         }
+        PlayAnim(part);
+    }
 
+    /// <summary>
+    /// 播放换装的动画
+    /// </summary>
+    public void PlayAnim(string part,string animStr = null)
+    {
+        if (string.IsNullOrEmpty(animStr))
+        {
+            switch (part)
+            {
+                case AssetBundleNames.top:
+                    peopleAnim.Play("item_shirt");
+                    break;
+                case AssetBundleNames.pants:
+                    peopleAnim.Play("item_pants");
+                    break;
+                case AssetBundleNames.shoes:
+                    peopleAnim.Play("item_boots");
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+        {
+            peopleAnim.Play(animStr);
+        }
     }
 
     public void ShowHideAvatar(bool isShow = false)
