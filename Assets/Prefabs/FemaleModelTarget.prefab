@@ -980,6 +980,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4423151486175340}
   - component: {fileID: 111933686865906958}
+  - component: {fileID: 136572039266320850}
+  - component: {fileID: 114367471343509636}
   m_Layer: 0
   m_Name: FemaleModelTarget
   m_TagString: Untagged
@@ -1916,3 +1918,28 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &114367471343509636
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1977452838599972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fa169deb1d5b254db809509ebbf247c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isClick: 0
+--- !u!136 &136572039266320850
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1977452838599972}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
