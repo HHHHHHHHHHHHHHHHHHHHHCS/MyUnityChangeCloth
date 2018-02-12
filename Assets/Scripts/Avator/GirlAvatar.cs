@@ -5,18 +5,15 @@ using UnityEngine;
 public class GirlAvatar : AvatarSystem
 {
 
-    public void Init(AssetBundle ab)
+    public new void Init(AssetBundle ab)
     {
-        if(ab)
+        if (ab)
         {
             assetBundle = ab;
             var source = InitSource("Assets/Prefabs/FemaleModel.prefab");
             InitTarget("Assets/Prefabs/FemaleModelTarget.prefab");
             InitData(source);
-            InitJson();
-
-            InitAvatar();
-            ShowHideAvatar(false);
+            base.Init(ab);
         }
     }
 }

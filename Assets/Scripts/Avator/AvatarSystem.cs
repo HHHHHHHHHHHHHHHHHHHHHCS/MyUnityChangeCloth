@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,6 +34,11 @@ public abstract class AvatarSystem : MonoBehaviour
     protected Dictionary<string, SkinnedMeshRenderer> peopleSmr;
 
     /// <summary>
+    /// 换装信息的部件保存
+    /// </summary>
+    protected Dictionary<string, string> peopleNowData;
+
+    /// <summary>
     /// 展示出的人物
     /// </summary>
     protected GameObject peopleTarget;
@@ -47,14 +53,20 @@ public abstract class AvatarSystem : MonoBehaviour
     /// </summary>
     protected Animation peopleAnim;
 
-    protected virtual void Init()
+    protected virtual void Init(AssetBundle ab)
     {
-        var source = InitSource(null);
-        InitTarget(null);
-        InitData(source);
-        InitJson();
+        if (ab)
+        {
+            //assetBundle = ab;
+            //var source = InitSource(null);
+            //InitTarget(null);
+            //InitData(source);
 
-        InitAvatar();
+            InitJson();
+            InitAvatar();
+            ShowHideAvatar(false);
+            Debug.Log(ExportJson());
+        }
     }
 
     //protected virtual void Update()
@@ -122,6 +134,7 @@ public abstract class AvatarSystem : MonoBehaviour
         //初始化字典
         peopleData = new Dictionary<string, Dictionary<string, SkinnedMeshRenderer>>();
         peopleSmr = new Dictionary<string, SkinnedMeshRenderer>();
+        peopleNowData = new Dictionary<string, string>();
         //遍历所有子物体有SkinnedMeshRenderer,进行存储
         SkinnedMeshRenderer[] parts = source.GetComponentsInChildren<SkinnedMeshRenderer>(true);
         foreach (var part in parts)
@@ -193,10 +206,10 @@ public abstract class AvatarSystem : MonoBehaviour
     /// <param name="num">换装的编号</param>
     public virtual void ChangeMesh(string part, string num)
     {
-        Dictionary < string,SkinnedMeshRenderer > dic;
+        Dictionary<string, SkinnedMeshRenderer> dic;
         SkinnedMeshRenderer skm;
         //判断异常，顺便找到部位
-        if (peopleData.TryGetValue(part,out dic)
+        if (peopleData.TryGetValue(part, out dic)
             && dic.TryGetValue(num, out skm))
         {
             //骨骼匹配   即 皮上的信息 跟 骨骼的信息想互相匹配
@@ -219,13 +232,14 @@ public abstract class AvatarSystem : MonoBehaviour
             body.materials = skm.materials;//材质重新绑定
             body.sharedMesh = skm.sharedMesh;//蒙皮重新绑定
         }
+        peopleNowData[part] = num;
         PlayAnim(part);
     }
 
     /// <summary>
     /// 播放换装的动画
     /// </summary>
-    public void PlayAnim(string part,string animStr = null)
+    public void PlayAnim(string part, string animStr = null)
     {
         if (string.IsNullOrEmpty(animStr))
         {
@@ -272,5 +286,15 @@ public abstract class AvatarSystem : MonoBehaviour
         }
 
         return spriteList;
+    }
+
+    public string ExportJson()
+    {
+        string json = string.Empty;
+        foreach (var item in peopleNowData)
+        {
+            json = JsonConvert.SerializeObject(peopleNowData);
+        }
+        return json;
     }
 }
